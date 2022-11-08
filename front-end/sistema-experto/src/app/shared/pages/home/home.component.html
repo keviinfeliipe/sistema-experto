@@ -1,0 +1,69 @@
+<app-header></app-header>
+<div class="container" *ngIf="moviesProfiling === null">
+  <h3 class="main-title">Profiling</h3>
+  <p class="card-title">Inicie perfilamiento</p>
+</div>
+<div *ngIf="moviesProfiling !== null">
+  <div class="container">
+    <br />
+    <h3 class="main-title">Profiling</h3>
+    <drag-scroll class="container-drag" #nav [scroll-x-wheel-enabled]="true">
+      <div *ngFor="let m of moviesProfiling; let i = index" drag-scroll-item>
+        <div class="card shadow-sm">
+          <img src="{{ m.path }}" class="card-img-top" alt="..." />
+          <div class="card-body">
+            <p class="card-title">{{ m.title }}</p>
+            <p class="card-title">Proba: {{ m.probability/calculateTotal() | percent:'2.2-5' }}</p>
+          </div>
+        </div>
+      </div>
+    </drag-scroll>
+  </div>
+</div>
+<button type="button" class="btn btn-danger btn-circle btn-xl" (click)="newProfiling()"><i class="bi bi-person-plus"></i></button>
+
+<!--
+<div class="container-all" *ngFor="let g of genres">
+  <div class="container">
+    <br />
+    <h3 class="main-title">{{ g }}</h3>
+    <drag-scroll class="container-drag" #nav [scroll-x-wheel-enabled]="true">
+      <div *ngFor="let m of movies; let i = index" drag-scroll-item>
+        <div *ngIf="g === m.genre">
+          <div class="card shadow-sm">
+            <img src="{{ m.path }}" class="card-img-top" alt="..." />
+            <div class="card-body">
+              <p class="card-title">{{ m.title }}</p>
+              <p class="card-title">Probability: {{ m.probability | percent }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </drag-scroll>
+  </div>
+</div>
+-->
+<ng-template #content let-c="close" let-d="dismiss">
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Profilling</h4>
+	</div>
+	<div class="modal-body">
+		<div class="container-card">
+      <div class="card-body">
+        <div class="text-center">
+          <img class="card-img-left" src="{{ answer.path }}" alt="Card image cap" />
+        </div>
+        <br />
+        <p class="card-text">He/She likes {{ answer.ask }} movies?</p>
+      </div>
+      <div class="d-grid gap-2 col-6 mx-auto">
+        <button type="button" class="btn btn-outline-success" (click)="saveAnswer('SI')" >YES</button>
+        <button type="button" class="btn btn-outline-danger" (click)="saveAnswer('NO')" >NO</button>
+      </div>
+    </div>
+	</div>
+	<div class="modal-footer">
+		<button *ngIf="answer.response !== null" type="button" class="btn btn-outline-dark" (click)="c('Save click')">Save</button>
+	</div>
+</ng-template>
+
